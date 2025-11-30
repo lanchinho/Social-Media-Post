@@ -1,5 +1,8 @@
+using Confluent.Kafka;
+using CQRS.Core.Consumers;
 using Microsoft.EntityFrameworkCore;
 using Post.Query.Domain.Repositories;
+using Post.Query.Infrastucture.Consumers;
 using Post.Query.Infrastucture.DataAccess;
 using Post.Query.Infrastucture.Handlers;
 using Post.Query.Infrastucture.Repositories;
@@ -18,8 +21,12 @@ dataContext.Database.EnsureCreated();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IEventHandler, Post.Query.Infrastucture.Handlers.EventHandler>();
+builder.Services.Configure<ConsumerConfig>(builder.Configuration.GetSection(nameof(ConsumerConfig)));
+builder.Services.AddScoped<IEventConsumer, EventConsumer>();
 
 builder.Services.AddControllers();
+builder.Services.AddHostedService<ConsumerHostedService>();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
