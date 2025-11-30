@@ -16,4 +16,5 @@ public class CommentEntity
 
 	[JsonIgnore]
 	public virtual PostEntity Post { get; set; }
+	public Guid PostId { get; set; }
 }

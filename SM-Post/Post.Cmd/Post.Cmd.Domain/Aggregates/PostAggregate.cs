@@ -59,7 +59,7 @@ namespace Post.Cmd.Domain.Aggregates
 				CommentId = Guid.NewGuid(),
 				Comment = comment,
 				Username = username,
-				CommentDatess = DateTime.Now
+				CommentDates = DateTime.Now
 			});
 		}
 
