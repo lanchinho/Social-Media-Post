@@ -3,6 +3,9 @@ using CQRS.Core.Domain;
 using CQRS.Core.Handlers;
 using CQRS.Core.Infrastructure;
 using CQRS.Core.Producers;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
 using Post.Cmd.Api.Commands;
 using Post.Cmd.Domain.Aggregates;
 using Post.Cmd.Infrastructure.Config;
@@ -13,6 +16,8 @@ using Post.Cmd.Infrastructure.Repositories;
 using Post.Cmd.Infrastructure.Stores;
 
 var builder = WebApplication.CreateBuilder(args);
+
+BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
 
 // Add services to the container.
 builder.Services.Configure<MongoDbConfig>(builder.Configuration.GetSection(nameof(MongoDbConfig)));
